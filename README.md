@@ -67,3 +67,9 @@ chromium-browser --noerrdialogs --disable-translate --no-first-run --fast --fast
 ```
 
 Next step is to run this script when your Pi boots.
+
+---
+
+## License ##
+|![http://i.imgur.com/oGGeSQP.png](http://i.imgur.com/oGGeSQP.png)|The license for "weather_station" is the [WTFPL](http://www.wtfpl.net/): _Do What the Fuck You Want to Public License_.|
+|:----------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------|
