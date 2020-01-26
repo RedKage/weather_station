@@ -1,0 +1,45 @@
+2016-11-04
+replaced PNGs with larger versions (480x420px)
+
+2016-04-15
+added sun to 11_iday
+
+2015-11-18
+replaced white raindrops with snow flakes in transparent 10_iday
+
+2015-08-27
+translations added
+
+2015-05-05
+bugfix
+
+2015-03-19
+iday: added SVG files with transparent background to this archive and updated 
+the documentation.
+
+
+2014-11-06
+white border for raindrops (11_iday transparent)
+
+
+2014-10-22
+pictogram 14_iday: five raindrops removed and small cloud lighter
+
+
+2014-06-16
+Italian translation update
+
+
+2014-04-24
+day/night:
+pictogram 10, 11 and 12: removed lightning and changed cloud to cumulonimbus
+pictogram 16, 17 and 18: removed sun
+pictogram 27: sun added, removed one cloud and three raindrops
+pictogram 28: sun added, removed two clouds and two raindrops
+iday:
+pictogram iday 3: removed one cloud
+pictogram iday 8: added three raindrops
+
+
+2013-07-12
+created
