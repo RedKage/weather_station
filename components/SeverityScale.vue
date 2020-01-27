@@ -94,7 +94,7 @@ export default {
   .scale {
     position: relative;
     display: inline-block;
-    width: 70%;
+    width: 65%;
     vertical-align: top;
 
     .line {
@@ -108,7 +108,7 @@ export default {
       .mark {
         position: absolute;
         top: 0;
-        font-size: 0.7em;
+        font-size: 0.6em;
         margin-left: -1em;
         width: 2em;
         text-align: center;
@@ -156,18 +156,19 @@ export default {
       }
     }
 
-    .markMin {
+    .markMin,
+    .markMax {
       position: absolute;
-      top: 2.15em;
-      left: calc(0.7em / 2);
-      font-size: 0.7em;
+      top: 2.5em;
+      font-size: 0.6em;
+    }
+
+    .markMin {
+      left: calc(0.6em / 2);
     }
 
     .markMax {
-      position: absolute;
-      top: 2.15em;
       right: calc(0.7em / 2);
-      font-size: 0.7em;
       margin-left: -1.7em;
     }
 
@@ -183,7 +184,7 @@ export default {
   .indexWrapper {
     position: relative;
     float: right;
-    width: 27%;
+    width: 30%;
     vertical-align: top;
     text-align: center;
 

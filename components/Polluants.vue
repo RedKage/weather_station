@@ -99,7 +99,7 @@ export default {
     border-radius: 0.2em;
     width: calc(50% - 0.2em);
     margin: 0.1em;
-    font-size: 0.9em;
+    font-size: 0.8em;
     cursor: pointer;
 
     &.dominant {
