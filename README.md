@@ -19,18 +19,25 @@ $ npm run generate
 
 ## How do I use this?
 
-Once you have generated the project with `npm run generate` then you can simply do to the `dist` folder and open the `index.html`.
-Done.
+Once you have generated the project with `npm run generate` head to the `dist` folder.
+Now make a copy of the default config file `config.default.js` to `config.js`.
+Now you can open the `index.html`.
+Enjoy.
 
-## Wait, can I configure the location and stuff?
+## Configuring
 
-Yes, you can my dude.
-Head to the `dist` folder and you'll notice a `config.js` file in there.
+The `config.js` holds at the top level:
+- The BreezoMeter API key
+- An array of Locations
+- An object holding the weather icons
 
-You can add multiple locations.
-Each location has its own background images (which will cycle every 30 minutes for now).
+So in effect you can configure multiple Locations for your weather station.
 
-The images of the weather icons is global for now.
+One loation is an object with:
+- Some fancy stuff like a name
+- A (Material Design icon)[https://materialdesignicons.com/]
+- Coordinates in object with two props lon and lat
+- A background images array, which will be displayed as the background of the station. Images will cycle every 30 minutes for now
 
 ## Dude, you just LEAKED you API key to the world, it's INSIDE the config file!
 
@@ -41,7 +48,8 @@ It's the API key that their [mobile app](https://play.google.com/store/apps/deta
 
 This project uses VueJS through Nuxt. It's made so that you _do not_ need any webserver: everything can run locally from a browser, preferrably Chromium.
 
-This way, you can host this anywhere, be it on an actual web server like nginx, or not. For instance you can just throw the dist folder to a Raspberry Pi and open the index HTML. Done.
+This way, you can host this anywhere, be it on an actual web server like nginx, or not. For instance you can just throw the dist folder to a Raspberry Pi and open the index.html.
+Done.
 
 # Running on a Rapsberry Pi
 
