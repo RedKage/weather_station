@@ -15,13 +15,13 @@
     </div>
 
     <v-layout align-start justify-left wrap>
-      <v-flex :class="$style.blockWrapper" d-flex xs6>
+      <v-flex :class="$style.blockWrapper" d-flex xs5>
         <block-air-quality
           :class="$style.block"
           :coordinates="locationInfo.coordinates"
         />
       </v-flex>
-      <v-flex :class="$style.blockWrapper" d-flex xs6>
+      <v-flex :class="$style.blockWrapper" d-flex xs7>
         <block-weather
           :class="$style.block"
           :coordinates="locationInfo.coordinates"

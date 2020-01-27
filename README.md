@@ -9,6 +9,7 @@
 ``` bash
 # clone this repo
 $ git clone https://github.com/RedKage/weather_station.git
+$ cd weather_station
 
 # install dependencies
 $ npm run install
@@ -20,11 +21,12 @@ $ npm run generate
 ## How do I use this?
 
 Once you have generated the project with `npm run generate` head to the `dist` folder.
-Now make a copy of the default config file `config.default.js` to `config.js`.
 Now you can open the `index.html`.
 Enjoy.
 
 ## Configuring
+
+In the `dist` folder there is a `config.js` file (and a backup `config.default.js`).
 
 The `config.js` holds at the top level:
 - The BreezoMeter API key
