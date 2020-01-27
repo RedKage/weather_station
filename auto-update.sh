@@ -12,7 +12,7 @@ then
   git pull --quiet
 
   echo "- Backing up the current dist folder..."
-  mv dist/ dist_old/
+  cp -f -r dist/ dist_old/
 
   echo "- Rebuilding..."
   npm i > /dev/null 2>&1
