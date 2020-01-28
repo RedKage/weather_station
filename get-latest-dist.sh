@@ -1,22 +1,18 @@
 #!/bin/bash
 
-echo "Fetching upstream info..."
-git fetch origin --quiet
-
-git diff master origin/master --quiet --exit-code
+echo "Downloading latest package..."
+wget -q https://github.com/RedKage/weather_station/releases/latest/download/dist.zip
 rc=$?
 
-if [ $rc -eq 1 ]
+if [ $rc -eq 0 ]
 then
-  echo "Upstream changes detected"
-  git pull --quiet
-
   echo "- Backing up the current dist folder..."
   cp -f -r dist/ dist_old/
 
-  echo "- Rebuilding..."
-  npm i > /dev/null 2>&1
-  npm run generate > /dev/null 2>&1
+  echo "- Unzipping..."
+  rm -r dist/
+  mkdir dist/
+  unzip dist.zip -d dist/ > /dev/null 2>&1
 
   echo "- Restoring old dist config..."
   cd dist_old
@@ -30,8 +26,9 @@ then
     | xargs -d '\n' cp -f --parents -t ../dist
   cd ..
   rm -r dist_old
+  rm -f dist.zip
 
   echo "Done"
 else
-  echo "Nothing to do"
+  echo "Something wrong with the download. Aborting."
 fi
