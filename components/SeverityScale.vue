@@ -153,6 +153,7 @@ export default {
         height: 1.1em;
         border-width: 0.2em;
         border-style: solid;
+        transition: left 1s ease;
       }
     }
 
