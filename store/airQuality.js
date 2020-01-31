@@ -1,11 +1,36 @@
 export const state = () => ({
   indexes: [],
-  polluants: []
+  polluants: [],
+  hourly: []
 })
 
-async function getAirQuality (context, apiKey, options) {
+async function getAirQuality (context, apiKey, coordinates) {
   try {
-    const url = `https://api.breezometer.com/air-quality/v2/current-conditions?lat=${options.lat}&lon=${options.lon}&features=breezometer_aqi,local_aqi,health_recommendations,sources_and_effects,dominant_pollutant_concentrations,pollutants_concentrations,pollutants_aqi_information&key=${apiKey}`
+    const url = `https://api.breezometer.com/air-quality/v2/current-conditions?lat=${coordinates.lat}&lon=${coordinates.lon}&features=breezometer_aqi,local_aqi,health_recommendations,sources_and_effects,dominant_pollutant_concentrations,pollutants_concentrations,pollutants_aqi_information&key=${apiKey}`
+    const response = await context.$axios.get(url)
+    return response.data.data
+  } catch (ex) {
+    // eslint-disable-next-line
+    console.error(ex)
+    return null
+  }
+}
+
+async function getAirQualityHistory (context, apiKey, coordinates, hours) {
+  try {
+    const url = `https://api.breezometer.com/air-quality/v2/historical/hourly?lat=${coordinates.lat}&lon=${coordinates.lon}&hours=${hours}&key=${apiKey}`
+    const response = await context.$axios.get(url)
+    return response.data.data
+  } catch (ex) {
+    // eslint-disable-next-line
+    console.error(ex)
+    return null
+  }
+}
+
+async function getAirQualityForecast (context, apiKey, coordinates, hours) {
+  try {
+    const url = `https://api.breezometer.com/air-quality/v2/forecast/hourly?lat=${coordinates.lat}&lon=${coordinates.lon}&hours=${hours}&key=${apiKey}`
     const response = await context.$axios.get(url)
     return response.data.data
   } catch (ex) {
@@ -96,20 +121,33 @@ export const mutations = {
     })
 
     state.polluants = polluantsByKey
+  },
+  RESET_HOURLY (state) {
+    state.hourly = []
+  },
+  PUSH_HOURLY (state, hourly) {
+    state.hourly = state.hourly.concat(hourly)
   }
 }
 
 export const actions = {
-  async FETCH_AIR_QUALITY (store, options) {
+  async FETCH_AIR_QUALITY (store, coordinates) {
+    const apiKey = window.config.breezometerApiKey
+    const airQuality = await getAirQuality(this, apiKey, coordinates)
+    store.commit('SET_INDEXES', airQuality.indexes)
+    store.commit('SET_POLLUANTS', airQuality.pollutants)
+  },
+  async FETCH_AIR_QUALITY_HOURLY (store, { coordinates, hours }) {
     const apiKey = window.config.breezometerApiKey
 
-    try {
-      const airQuality = await getAirQuality(this, apiKey, options)
-      store.commit('SET_INDEXES', airQuality.indexes)
-      store.commit('SET_POLLUANTS', airQuality.pollutants)
-    } catch (ex) {
-      // eslint-disable-next-line
-      console.error(ex)
-    }
+    const [airQualityHistory, airQualityForecast] =
+      await Promise.all([
+        getAirQualityHistory(this, apiKey, coordinates, hours),
+        getAirQualityForecast(this, apiKey, coordinates, hours)
+      ])
+
+    store.commit('RESET_HOURLY')
+    store.commit('PUSH_HOURLY', airQualityHistory)
+    store.commit('PUSH_HOURLY', airQualityForecast)
   }
 }

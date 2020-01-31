@@ -21,6 +21,8 @@
       />
     </div>
     <v-divider :class="$style.divider" />
+    <hourly-air-quality />
+    <v-divider :class="$style.divider" />
     <polluants
       v-if="airIndexes[0]"
       :domiant-polluant="airIndexes[0].dominant_pollutant"
@@ -29,24 +31,25 @@
 </template>
 
 <script>
+import HourlyAirQuality from '~/components/HourlyAirQuality.vue'
 import SeverityScale from '~/components/SeverityScale.vue'
 import Polluants from '~/components/Polluants.vue'
 
 async function load (context) {
   context.loading = true
 
-  const options = {
-    ...context.coordinates
-  }
-  await context.$store.dispatch('airQuality/FETCH_AIR_QUALITY', options)
-
+  await Promise.all([
+    context.$store.dispatch('airQuality/FETCH_AIR_QUALITY', context.coordinates),
+    context.$store.dispatch('airQuality/FETCH_AIR_QUALITY_HOURLY', { coordinates: context.coordinates, hours: 4 })
+  ])
   context.loading = false
 }
 
 export default {
   components: {
     SeverityScale,
-    Polluants
+    Polluants,
+    HourlyAirQuality
   },
   props: {
     coordinates: {
