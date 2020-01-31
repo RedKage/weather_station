@@ -13,12 +13,9 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
-    "fs": "0.0.1-security",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
-    "net": "^1.0.2",
-    "nuxt": "^2.0.0",
-    "tls": "0.0.1"
+    "nuxt": "^2.0.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",
