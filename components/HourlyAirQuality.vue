@@ -101,8 +101,9 @@ export default {
       .hour {
         display: block;
         text-align: center;
-        font-size: 0.7em;
+        font-size: 0.8em;
         line-height: 1em;
+        margin-top: 0.4em;
       }
     }
   }
