@@ -13,6 +13,7 @@
       :weather-icons="weatherIcons"
       :hourly-weather="hourlyWeather"
       :show-every-nth-hour="6"
+      :show-arrows="false"
     />
   </v-card>
 </template>

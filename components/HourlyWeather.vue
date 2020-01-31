@@ -1,18 +1,18 @@
 <template>
   <div :class="$style.container">
-    <v-btn :class="$style.left" @click="left" icon tile>
+    <v-btn v-if="showArrows" :class="$style.left" @click="left" icon tile>
       <v-icon>mdi-chevron-left</v-icon>
     </v-btn>
-    <div ref="days" :class="$style.days">
+    <div ref="days" :class="{ [$style.days]: true, [$style.withArrows]: showArrows }">
       <div
         v-for="weather in everyNthHours"
         :key="weather.datetime"
         :class="$style.day"
       >
         <div :class="$style.temperature">
-          <span :class="$style.value">{{
-            Math.round(weather.temperature.value * 10) / 10
-          }}</span>
+          <span :class="$style.value">
+            {{ Math.round(weather.temperature.value) }}
+          </span>
           <span :class="$style.unit">
             <span>°{{ weather.temperature.units }}</span>
           </span>
@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    <v-btn :class="$style.right" @click="right" icon tile>
+    <v-btn v-if="showArrows" :class="$style.right" @click="right" icon tile>
       <v-icon>mdi-chevron-right</v-icon>
     </v-btn>
   </div>
@@ -62,6 +62,10 @@ export default {
     showEveryNthHour: {
       default: 1,
       type: Number
+    },
+    showArrows: {
+      default: true,
+      type: Boolean
     }
   },
   computed: {
@@ -90,6 +94,9 @@ export default {
       const firstDayElement = this.$refs.days.firstChild
       const firstDayElementRect = firstDayElement.getBoundingClientRect()
       this.$refs.days.scrollLeft += firstDayElementRect.width
+    },
+    oneDecimal (number) {
+      return Math.round(number * 10) / 10
     }
   }
 }
@@ -120,10 +127,14 @@ export default {
 
   .days {
     display: inline-block;
-    width: calc(100% - 3em);
+    width: 100%;
     vertical-align: middle;
     overflow: hidden;
     white-space: nowrap;
+
+    &.withArrows {
+      width: calc(100% - 3em);
+    }
 
     .day {
       display: inline-block;
