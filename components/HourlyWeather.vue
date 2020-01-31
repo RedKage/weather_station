@@ -72,7 +72,7 @@ export default {
     everyNthHours () {
       const result = []
       for (
-        let i = this.showEveryNthHour;
+        let i = this.showEveryNthHour - 1;
         i < this.hourlyWeather.length;
         i = i + this.showEveryNthHour
       ) {
