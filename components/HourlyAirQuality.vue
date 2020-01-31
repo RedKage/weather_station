@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import MomentTimezone from 'moment-timezone'
+import Moment from 'moment-timezone'
 
 export default {
   props: {
@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     getHour (dateTime) {
-      return MomentTimezone(dateTime).tz(this.timezone).format('HH')
+      return Moment(dateTime).tz(this.timezone).format('HH')
     },
     getSeverity (aqi) {
       return this.$store.getters['airQuality/getSeverityFromAqi'](aqi, this.scale)

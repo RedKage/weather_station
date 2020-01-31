@@ -11,8 +11,7 @@
 </template>
 
 <script>
-import Moment from 'moment'
-import MomentTimezone from 'moment-timezone'
+import Moment from 'moment-timezone'
 
 export default {
   props: {
@@ -30,17 +29,17 @@ export default {
   computed: {
     day () {
       return this.datetime
-        ? MomentTimezone(this.datetime).tz(this.timezone).format('dddd')
+        ? Moment(this.datetime).tz(this.timezone).format('dddd')
         : ''
     },
     date () {
       return this.datetime
-        ? MomentTimezone(this.datetime).tz(this.timezone).format('MMMM DD')
+        ? Moment(this.datetime).tz(this.timezone).format('MMMM DD')
         : ''
     },
     time () {
       return this.datetime
-        ? MomentTimezone(this.datetime).tz(this.timezone).format('HH:mm')
+        ? Moment(this.datetime).tz(this.timezone).format('HH:mm')
         : ''
     }
   },
