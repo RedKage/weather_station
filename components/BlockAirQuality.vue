@@ -39,10 +39,7 @@ import Polluants from '~/components/Polluants.vue'
 
 async function load (context) {
   context.loading = true
-  await Promise.all([
-    context.$store.dispatch('airQuality/FETCH_AIR_QUALITY', context.coordinates),
-    context.$store.dispatch('airQuality/FETCH_AIR_QUALITY_HOURLY', { coordinates: context.coordinates, beforeHours: 2, afterHours: 8 })
-  ])
+  await context.$store.dispatch('airQuality/FETCH_AIR_QUALITY', { coordinates: context.coordinates, beforeHours: 2, afterHours: 8 })
   context.loading = false
 }
 

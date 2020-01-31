@@ -134,23 +134,38 @@ export const mutations = {
 }
 
 export const actions = {
-  async FETCH_AIR_QUALITY (store, coordinates) {
-    const apiKey = window.config.breezometerApiKey
-    const airQuality = await getAirQuality(this, apiKey, coordinates)
-    store.commit('SET_INDEXES', airQuality.indexes)
-    store.commit('SET_POLLUANTS', airQuality.pollutants)
-  },
-  async FETCH_AIR_QUALITY_HOURLY (store, { coordinates, beforeHours, afterHours }) {
+  async FETCH_AIR_QUALITY (store, { coordinates, beforeHours, afterHours }) {
     const apiKey = window.config.breezometerApiKey
 
-    const [airQualityHistory, airQualityForecast] =
-      await Promise.all([
-        getAirQualityHistory(this, apiKey, coordinates, beforeHours),
-        getAirQualityForecast(this, apiKey, coordinates, afterHours)
-      ])
+    const promises = [
+      getAirQuality(this, apiKey, coordinates)
+    ]
 
-    store.commit('RESET_HOURLY')
-    store.commit('PUSH_HOURLY', airQualityHistory)
-    store.commit('PUSH_HOURLY', airQualityForecast)
+    if (beforeHours > 0) {
+      promises.push(getAirQualityHistory(this, apiKey, coordinates, beforeHours))
+    }
+    if (afterHours > 0) {
+      promises.push(getAirQualityForecast(this, apiKey, coordinates, afterHours))
+    }
+
+    const [airQuality, airQualityHistory, airQualityForecast] = await Promise.all(promises)
+
+    if (airQuality && !airQuality.error) {
+      store.commit('SET_INDEXES', airQuality.indexes)
+      store.commit('SET_POLLUANTS', airQuality.pollutants)
+    }
+
+    let hasReset = false
+    if (airQualityHistory && !airQualityHistory.error) {
+      store.commit('RESET_HOURLY')
+      store.commit('PUSH_HOURLY', airQualityHistory)
+      hasReset = true
+    }
+    if (airQualityForecast && !airQualityForecast.error) {
+      if (!hasReset) {
+        store.commit('RESET_HOURLY')
+      }
+      store.commit('PUSH_HOURLY', airQualityForecast)
+    }
   }
 }

@@ -72,10 +72,10 @@ export const actions = {
       getHourlyWeather(this, apiKey, options)
     ])
 
-    if (current) {
+    if (current && !current.erro) {
       store.commit('SET_CURRENT_WEATHER', current)
     }
-    if (hourly) {
+    if (hourly && !hourly.error) {
       store.commit('SET_HOURLY_WEATHER', hourly)
     }
   }
