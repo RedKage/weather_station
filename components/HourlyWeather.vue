@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import Moment from 'moment'
+import MomentTimezone from 'moment-timezone'
 import WeatherIcon from '~/components/WeatherIcon.vue'
 
 export default {
@@ -51,6 +51,10 @@ export default {
     WeatherIcon
   },
   props: {
+    timezone: {
+      default: 'UTC',
+      type: String
+    },
     weatherIcons: {
       default: () => {},
       type: Object
@@ -83,7 +87,7 @@ export default {
   },
   methods: {
     getHour (dateTime) {
-      return Moment(dateTime).format('HH')
+      return MomentTimezone(dateTime).tz(this.timezone).format('HH')
     },
     left () {
       const firstDayElement = this.$refs.days.firstChild

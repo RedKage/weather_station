@@ -25,6 +25,7 @@
         <block-weather
           :class="$style.block"
           :coordinates="locationInfo.coordinates"
+          :timezone="locationInfo.timezone"
         />
       </v-flex>
     </v-layout>

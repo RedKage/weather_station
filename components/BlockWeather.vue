@@ -10,6 +10,7 @@
     <hourly-weather
       v-if="hourlyWeather"
       :class="$style.hourly"
+      :timezone="timezone"
       :weather-icons="weatherIcons"
       :hourly-weather="hourlyWeather"
       :show-every-nth-hour="6"
@@ -42,6 +43,10 @@ export default {
     coordinates: {
       default: () => {},
       type: Object
+    },
+    timezone: {
+      default: 'UTC',
+      type: String
     }
   },
   data () {
