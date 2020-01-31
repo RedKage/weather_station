@@ -94,7 +94,7 @@ export default {
   .scale {
     position: relative;
     display: inline-block;
-    width: 65%;
+    width: 70%;
     vertical-align: top;
 
     .line {
@@ -118,7 +118,7 @@ export default {
       .segment {
         position: absolute;
         display: block;
-        top: 1.4em;
+        top: 1.3em;
         border-width: 0.3em;
         border-style: solid;
         border-left: none;
@@ -149,7 +149,7 @@ export default {
 
       .arrow {
         position: absolute;
-        top: 1.1em;
+        top: 1em;
         height: 1.1em;
         border-width: 0.2em;
         border-style: solid;
@@ -178,6 +178,7 @@ export default {
       text-transform: uppercase;
       font-size: 1em;
       height: 1.5em;
+      line-height: 1em;
     }
   }
 
