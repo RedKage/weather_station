@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Downloading latest package..."
+echo "- Downloading latest package..."
 wget -q https://github.com/RedKage/weather_station/releases/latest/download/dist.zip
 rc=$?
 
