@@ -120,7 +120,8 @@ export default {
   font-size: 2em;
 
   .drawerPane {
-    width: 15em !important;
+    width: 7em !important;
+    font-size: 3em;
   }
 
   .buttons {
