@@ -72,7 +72,7 @@ export default {
     everyNthHours () {
       const result = []
       for (
-        let i = 0;
+        let i = this.showEveryNthHour;
         i < this.hourlyWeather.length;
         i = i + this.showEveryNthHour
       ) {
@@ -94,9 +94,6 @@ export default {
       const firstDayElement = this.$refs.days.firstChild
       const firstDayElementRect = firstDayElement.getBoundingClientRect()
       this.$refs.days.scrollLeft += firstDayElementRect.width
-    },
-    oneDecimal (number) {
-      return Math.round(number * 10) / 10
     }
   }
 }
