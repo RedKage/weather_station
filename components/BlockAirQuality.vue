@@ -20,8 +20,7 @@
         }"
       />
     </div>
-    <v-divider :class="$style.divider" />
-    <hourly-air-quality />
+    <hourly-air-quality :hourly-aqi="hourlyAirIndexes" />
     <v-divider :class="$style.divider" />
     <polluants
       v-if="airIndexes[0]"
@@ -37,10 +36,9 @@ import Polluants from '~/components/Polluants.vue'
 
 async function load (context) {
   context.loading = true
-
   await Promise.all([
     context.$store.dispatch('airQuality/FETCH_AIR_QUALITY', context.coordinates),
-    context.$store.dispatch('airQuality/FETCH_AIR_QUALITY_HOURLY', { coordinates: context.coordinates, hours: 4 })
+    context.$store.dispatch('airQuality/FETCH_AIR_QUALITY_HOURLY', { coordinates: context.coordinates, beforeHours: 2, afterHours: 8 })
   ])
   context.loading = false
 }
@@ -66,6 +64,9 @@ export default {
   computed: {
     airIndexes () {
       return this.$store.getters['airQuality/getIndexes']
+    },
+    hourlyAirIndexes () {
+      return this.$store.getters['airQuality/getHourlyIndexes']
     }
   },
   watch: {

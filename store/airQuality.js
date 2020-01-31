@@ -90,6 +90,9 @@ export const getters = {
     return isAscending
       ? getSeverityFromAqiAsc(aqi, scaleArray)
       : getSeverityFromAqiDesc(aqi, scaleArray)
+  },
+  getHourlyIndexes: (state) => {
+    return state.hourly
   }
 }
 
@@ -137,13 +140,13 @@ export const actions = {
     store.commit('SET_INDEXES', airQuality.indexes)
     store.commit('SET_POLLUANTS', airQuality.pollutants)
   },
-  async FETCH_AIR_QUALITY_HOURLY (store, { coordinates, hours }) {
+  async FETCH_AIR_QUALITY_HOURLY (store, { coordinates, beforeHours, afterHours }) {
     const apiKey = window.config.breezometerApiKey
 
     const [airQualityHistory, airQualityForecast] =
       await Promise.all([
-        getAirQualityHistory(this, apiKey, coordinates, hours),
-        getAirQualityForecast(this, apiKey, coordinates, hours)
+        getAirQualityHistory(this, apiKey, coordinates, beforeHours),
+        getAirQualityForecast(this, apiKey, coordinates, afterHours)
       ])
 
     store.commit('RESET_HOURLY')
