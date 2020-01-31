@@ -20,7 +20,10 @@
         }"
       />
     </div>
-    <hourly-air-quality :hourly-aqi="hourlyAirIndexes" />
+    <hourly-air-quality
+      :hourly-aqi="hourlyAirIndexes"
+      :timezone="timezone"
+    />
     <v-divider :class="$style.divider" />
     <polluants
       v-if="airIndexes[0]"
@@ -53,6 +56,10 @@ export default {
     coordinates: {
       default: () => {},
       type: Object
+    },
+    timezone: {
+      default: 'UTC',
+      type: String
     }
   },
   data () {

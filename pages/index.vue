@@ -19,6 +19,7 @@
         <block-air-quality
           :class="$style.block"
           :coordinates="locationInfo.coordinates"
+          :timezone="locationInfo.timezone"
         />
       </v-flex>
       <v-flex :class="$style.blockWrapper" d-flex xs6>
