@@ -149,7 +149,7 @@ export default {
 
       .arrow {
         position: absolute;
-        top: 1em;
+        top: 0.9em;
         height: 1.1em;
         border-width: 0.2em;
         border-style: solid;
@@ -185,7 +185,7 @@ export default {
   .indexWrapper {
     position: relative;
     float: right;
-    width: 30%;
+    width: 25%;
     vertical-align: top;
     text-align: center;
 
