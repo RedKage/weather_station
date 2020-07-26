@@ -25,27 +25,29 @@
       </v-list>
     </v-navigation-drawer>
 
-    <div :class="$style.buttons">
-      <div :class="$style.drawer">
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+    <div :class="{ [$style.front]: true, [$style.shown]: showUi, [$style.hidden]: !showUi }">
+      <div :class="$style.buttons">
+        <div :class="$style.drawer">
+          <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+        </div>
+        <div :class="$style.fullscreen">
+          <v-btn @click.stop="toggleFullscreen" icon>
+            <v-icon v-if="fullscreen">
+              mdi-fullscreen-exit
+            </v-icon>
+            <v-icon v-else>
+              mdi-fullscreen
+            </v-icon>
+          </v-btn>
+        </div>
       </div>
-      <div :class="$style.fullscreen">
-        <v-btn @click.stop="toggleFullscreen" icon>
-          <v-icon v-if="fullscreen">
-            mdi-fullscreen-exit
-          </v-icon>
-          <v-icon v-else>
-            mdi-fullscreen
-          </v-icon>
-        </v-btn>
-      </div>
-    </div>
 
-    <v-content>
-      <v-container :class="$style.page">
-        <nuxt />
-      </v-container>
-    </v-content>
+      <v-content>
+        <v-container :class="$style.page">
+          <nuxt />
+        </v-container>
+      </v-content>
+    </div>
   </v-app>
 </template>
 
@@ -59,6 +61,9 @@ export default {
       fullscreen: false,
       miniVariant: false,
       refreshBackgroundImageInterval: null,
+      showUiTimeout: null,
+      hideUiTimeout: null,
+      showUi: true,
       backgroundImageIndex: 0
     }
   },
@@ -81,15 +86,39 @@ export default {
     this.changeLocation(window.config.locations[0])
   },
   mounted () {
+    // detects fullscreen change event
     document.addEventListener('fullscreenchange', this.onFullscreenChange)
+
+    // set background image change intervall
     this.refreshBackgroundImageInterval = setInterval(() => {
       const imagesCount = this.currentLocation.backgroundImages.length
       this.backgroundImageIndex = (this.backgroundImageIndex + 1) % imagesCount
     }, 1000 * 60 * 30) // 30 minutes
+
+    const that = this
+    // set UI hide interval
+    function setHideUiTimeout () {
+      that.hideUiTimeout = setTimeout(() => {
+        that.showUi = false
+        setShowUiTimeout()
+      }, 1000 * 50) // 50 secs
+    }
+
+    // set UI show interval
+    function setShowUiTimeout () {
+      that.showUiTimeout = setTimeout(() => {
+        that.showUi = true
+        setHideUiTimeout()
+      }, 1000 * 10) // 60 secs
+    }
+
+    setHideUiTimeout()
   },
   beforeDestroy () {
     document.removeEventListener('fullscreenchange', this.onFullscreenChange)
     clearInterval(this.refreshBackgroundImageInterval)
+    clearTimeout(this.showUiTimeout)
+    clearTimeout(this.hideUiTimeout)
   },
   methods: {
     onFullscreenChange (event) {
@@ -124,28 +153,80 @@ export default {
     font-size: 3em;
   }
 
-  .buttons {
-    position: absolute;
-    top: 1em;
-    left: 0.5em;
-    font-size: 2.5em;
-    z-index: 1;
-
-    .drawer {
-      float: left;
+  .front {
+    position: relative;
+    &.shown {
+      opacity: 1;
+      animation: twoStepsFadeIn 2s;
+    }
+    &.hidden {
+      opacity: 0;
+      animation: twoStepsFadeOut 2s;
     }
 
-    .fullscreen {
-      float: left;
+    .buttons {
+      position: absolute;
+      top: 1em;
+      left: 0.5em;
+      font-size: 2.5em;
+      z-index: 1;
+
+      .drawer {
+        float: left;
+      }
+
+      .fullscreen {
+        float: left;
+      }
+    }
+
+    .page {
+      padding: 0;
+      margin: 0;
+      max-width: 100%;
+      width: 100%;
+      height: 100%;
     }
   }
 
-  .page {
-    padding: 0;
-    margin: 0;
-    max-width: 100%;
-    width: 100%;
-    height: 100%;
+  @keyframes twoStepsFadeIn {
+    0% {
+      opacity: 0;
+    }
+    32% {
+      opacity: 0;
+    }
+
+    33% {
+      opacity: .5;
+    }
+    99% {
+      opacity: .5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+  }
+
+  @keyframes twoStepsFadeOut {
+    0% {
+      opacity: 1;
+    }
+    32% {
+      opacity: 1;
+    }
+
+    33% {
+      opacity: .5;
+    }
+    99% {
+      opacity: .5;
+    }
+
+    100% {
+        opacity: 0;
+    }
   }
 }
 </style>
